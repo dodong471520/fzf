@@ -405,7 +405,6 @@ try
     let optstr .= ' --no-height'
   endif
   let command = prefix.(use_tmux ? s:fzf_tmux(dict) : fzf_exec).' '.optstr.' > '.temps.result
-
   if use_term
     return s:execute_term(dict, command, temps)
   endif
@@ -551,7 +550,9 @@ function! s:execute(dict, command, use_height, temps) abort
   endif
   if a:use_height
     let stdin = has_key(a:dict, 'source') ? '' : '< /dev/tty'
-    call system(printf('tput cup %d > /dev/tty; tput cnorm > /dev/tty; %s %s 2> /dev/tty', &lines, command, stdin))
+    let tmp=printf('tput cup %d > /dev/tty; tput cnorm > /dev/tty; %s %s 2> /dev/tty', &lines, command, stdin)
+    "echom tmp
+    call system(tmp)
   else
     execute 'silent !'.command
   endif
