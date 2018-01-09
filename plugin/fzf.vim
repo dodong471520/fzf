@@ -551,7 +551,7 @@ function! s:execute(dict, command, use_height, temps) abort
   if a:use_height
     let stdin = has_key(a:dict, 'source') ? '' : '< /dev/tty'
     let tmp=printf('tput cup %d > /dev/tty; tput cnorm > /dev/tty; %s %s 2> /dev/tty', &lines, command, stdin)
-    "echom tmp
+    " echom tmp
     call system(tmp)
   else
     execute 'silent !'.command
